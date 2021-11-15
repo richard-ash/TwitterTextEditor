@@ -168,6 +168,9 @@ public protocol TextEditorViewTextAttributesDelegate: AnyObject {
     func textEditorView(_ textEditorView: TextEditorView,
                         updateAttributedString attributedString: NSAttributedString,
                         completion: @escaping (NSAttributedString?) -> Void)
+
+
+    func textEditorView(_ textEditorView: TextEditorView, shouldInteractWith url: URL, in characterRange: NSRange) -> Bool
 }
 
 /**
@@ -1729,6 +1732,10 @@ extension TextEditorView: UITextViewDelegate {
         // See also `textViewDidEndEditing(_:)`.
 
         userInteractionDidChangeTextViewScheduler.schedule()
+    }
+
+    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        textAttributesDelegate?.textEditorView(self, shouldInteractWith: URL, in: characterRange) ?? true
     }
 
     private func userInteractionDidChangeTextView() {

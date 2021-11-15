@@ -42,6 +42,10 @@ extension TextViewDelegateForwarder: UITextViewDelegate {
     public func textViewDidChange(_ textView: UITextView) {
         textViewDelegate?.textViewDidChange?(textView)
     }
+
+    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        textViewDelegate?.textView?(textView, shouldInteractWith: URL, in: characterRange, interaction: interaction) ?? true
+    }
 }
 
 /// :nodoc:
